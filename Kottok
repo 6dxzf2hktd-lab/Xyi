@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Квиз: Кинематограф России</title>
+  <style>
+    :root {
+      --bg-dark: #0e1015;
+      --bg-card: #181c26;
+      --bg-card-hover: #212634;
+      --gold: #e5b84b;
+      --gold-light: #f6d57e;
+      --crimson: #b8293d;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --correct: #1f7a4c;
+      --correct-border: #34d399;
+      --wrong: #882230;
+      --wrong-border: #f87171;
+      --border: #2c3344;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at top, #1d2230 0%, #0e1015 70%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 780px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Декоративная киноплёнка сверху */
+    .film-strip {
+      height: 14px;
+      background: repeating-linear-gradient(
+        90deg,
+        #090a0d 0px,
+        #090a0d 14px,
+        var(--gold) 14px,
+        var(--gold) 24px
+      );
+      opacity: 0.85;
+    }
+
+    .content {
+      padding: 36px 40px;
+    }
+
+    @media (max-width: 600px) {
+      .content {
+        padding: 24px 20px;
+      }
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(229, 184, 75, 0.14);
+      color: var(--gold);
+      border: 1px solid rgba(229, 184, 75, 0.35);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+
+    h1 span {
+      color: var(--gold);
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 28px;
+    }
+
+    .stats-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .stat-box {
+      background: #12151d;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 1.35rem;
+      color: var(--gold);
+    }
+
+    .stat-box span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--gold) 0%, #c9972c 100%);
+      color: #111318;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 28px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      width: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(229, 184, 75, 0.3);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      margin-top: 12px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(229, 184, 75, 0.1);
+      box-shadow: none;
+    }
+
+    /* Экран вопроса */
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .score-pill {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #10131a;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--crimson), var(--gold));
+      transition: width 0.35s ease;
+    }
+
+    .era-tag {
+      font-size: 0.8rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #ffffff;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      background: #12151e;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px 18px;
+      color: var(--text-main);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: var(--bg-card-hover);
+      border-color: var(--gold);
+    }
+
+    .option-letter {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #1e2330;
+      color: var(--gold);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option-btn.correct {
+      background: rgba(31, 122, 76, 0.28);
+      border-color: var(--correct-border);
+    }
+
+    .option-btn.correct .option-letter {
+      background: var(--correct-border);
+      color: #0b1811;
+    }
+
+    .option-btn.wrong {
+      background: rgba(136, 34, 48, 0.3);
+      border-color: var(--wrong-border);
+    }
+
+    .option-btn.wrong .option-letter {
+      background: var(--wrong-border);
+      color: #1f090c;
+    }
+
+    .explanation-box {
+      display: none;
+      background: #11151f;
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      font-size: 0.95rem;
+      color: #e5e7eb;
+    }
+
+    .explanation-box.visible {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .explanation-title {
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    /* Экран результатов */
+    .result-score {
+      font-size: 3.4rem;
+      font-weight: 800;
+      color: var(--gold);
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .result-rank {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .result-desc {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .review-list {
+      max-height: 290px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 24px;
+      background: #12151e;
+    }
+
+    .review-item {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .review-item:last-child {
+      border-bottom: none;
+    }
+
+    .review-status {
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .status-ok {
+      color: var(--correct-border);
+    }
+
+    .status-err {
+      color: var(--wrong-border);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="film-strip"></div>
+
+    <!-- Стартовый экран -->
+    <div id="start-screen" class="content">
+      <div class="badge">Интерактивный киноквиз</div>
+      <h1>Кинематограф России: <span>от немого кино до мирового признания</span></h1>
+      <p class="subtitle">
+        Проверьте свои знания об истории отечественного кино — от первого публичного сеанса 1896 года и эпохи монтажного авангарда до наград «Оскар», Канн и современных блокбастеров.
+      </p>
+
+      <div class="stats-preview">
+        <div class="stat-box">
+          <strong>20</strong>
+          <span>вопросов</span>
+        </div>
+        <div class="stat-box">
+          <strong>Средний</strong>
+          <span>уровень сложности</span>
+        </div>
+        <div class="stat-box">
+          <strong>~7 мин</strong>
+          <span>время прохождения</span>
+        </div>
+      </div>
+
+      <button id="start-btn" class="btn">Начать квиз</button>
+    </div>
+
+    <!-- Экран викторины -->
+    <div id="quiz-screen" class="content hidden">
+      <div class="quiz-header">
+        <span id="question-counter">Вопрос 1 из 20</span>
+        <span id="score-counter" class="score-pill">Счёт: 0</span>
+      </div>
+
+      <div class="progress-bar">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+
+      <div id="era-tag" class="era-tag">Эпоха</div>
+      <div id="question-text" class="question-text">Текст вопроса</div>
+
+      <div id="options-list" class="options-list"></div>
+
+      <div id="explanation-box" class="explanation-box">
+        <div id="explanation-title" class="explanation-title">Пояснение</div>
+        <div id="explanation-text"></div>
+      </div>
+
+      <button id="next-btn" class="btn" disabled>Следующий вопрос</button>
+    </div>
+
+    <!-- Экран результатов -->
+    <div id="result-screen" class="content hidden">
+      <div class="badge">Финальные титры</div>
+      <div id="result-score" class="result-score">0 / 20</div>
+      <div id="result-rank" class="result-rank">Звание</div>
+      <p id="result-desc" class="result-desc">Описание результата</p>
+
+      <div id="review-list" class="review-list"></div>
+
+      <button id="restart-btn" class="btn">Пройти квиз заново</button>
+    </div>
+
