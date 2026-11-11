@@ -5,14 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Киноквиз: Кинематограф России</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       background: #0d0f14;
       color: #f4f4f6;
       min-height: 100vh;
@@ -21,23 +16,15 @@
       justify-content: center;
       padding: 16px;
     }
-
     .app {
       width: 100%;
-      max-width: 740px;
+      max-width: 720px;
       background: #171a23;
       border: 1px solid #2b3142;
       border-radius: 16px;
-      padding: 32px;
+      padding: 28px 22px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     }
-
-    @media (max-width: 560px) {
-      .app {
-        padding: 20px;
-      }
-    }
-
     .tag {
       display: inline-block;
       background: rgba(232, 185, 69, 0.15);
@@ -49,27 +36,12 @@
       font-weight: 600;
       margin-bottom: 14px;
     }
-
-    h1 {
-      font-size: 28px;
-      line-height: 1.25;
-      margin-bottom: 12px;
-    }
-
-    h1 span {
-      color: #e8b945;
-    }
-
-    .desc {
-      color: #a0a8b8;
-      font-size: 16px;
-      line-height: 1.5;
-      margin-bottom: 24px;
-    }
-
-    .btn-primary {
+    h1 { font-size: 25px; line-height: 1.25; margin-bottom: 12px; }
+    h1 span { color: #e8b945; }
+    .desc { color: #a0a8b8; font-size: 15px; line-height: 1.5; margin-bottom: 24px; }
+    .btn {
       width: 100%;
-      padding: 15px 24px;
+      padding: 15px 20px;
       font-size: 16px;
       font-weight: 700;
       color: #111318;
@@ -77,74 +49,32 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: background 0.2s;
     }
-
-    .btn-primary:hover:not(:disabled) {
-      background: #f5ca5c;
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
     .top-bar {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       margin-bottom: 10px;
       font-size: 14px;
       color: #a0a8b8;
     }
-
-    .top-bar strong {
-      color: #e8b945;
-    }
-
+    .top-bar strong { color: #e8b945; }
     .progress-track {
       width: 100%;
       height: 8px;
       background: #0d0f14;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 22px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #e8b945;
-      transition: width 0.3s ease;
-    }
-
-    .q-era {
-      font-size: 13px;
-      color: #e8b945;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .q-title {
-      font-size: 21px;
-      font-weight: 700;
-      line-height: 1.35;
       margin-bottom: 20px;
     }
-
-    .answers {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
+    .progress-bar { height: 100%; width: 0%; background: #e8b945; transition: width 0.3s; }
+    .q-era { font-size: 12px; color: #e8b945; text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+    .q-title { font-size: 19px; font-weight: 700; line-height: 1.35; margin-bottom: 18px; }
+    .answers { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
     .answer-btn {
       width: 100%;
       text-align: left;
-      padding: 14px 16px;
+      padding: 13px 14px;
       background: #10131a;
       border: 1px solid #2b3142;
       border-radius: 10px;
@@ -153,22 +83,11 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 12px;
-      transition: border-color 0.15s, background 0.15s;
+      gap: 10px;
     }
-
-    .answer-btn:hover:not(:disabled) {
-      border-color: #e8b945;
-      background: #1c212e;
-    }
-
-    .answer-btn:disabled {
-      cursor: default;
-    }
-
     .letter {
-      min-width: 28px;
-      height: 28px;
+      min-width: 26px;
+      height: 26px;
       border-radius: 6px;
       background: #232838;
       color: #e8b945;
@@ -176,210 +95,85 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 13px;
     }
-
-    .answer-btn.is-correct {
-      background: rgba(25, 135, 84, 0.25);
-      border-color: #2ecc71;
-    }
-
-    .answer-btn.is-correct .letter {
-      background: #2ecc71;
-      color: #0b1911;
-    }
-
-    .answer-btn.is-wrong {
-      background: rgba(220, 53, 69, 0.25);
-      border-color: #ff6b6b;
-    }
-
-    .answer-btn.is-wrong .letter {
-      background: #ff6b6b;
-      color: #1f0a0c;
-    }
-
+    .answer-btn.ok-ans { background: rgba(25, 135, 84, 0.28); border-color: #2ecc71; }
+    .answer-btn.ok-ans .letter { background: #2ecc71; color: #0b1911; }
+    .answer-btn.bad-ans { background: rgba(220, 53, 69, 0.28); border-color: #ff6b6b; }
+    .answer-btn.bad-ans .letter { background: #ff6b6b; color: #1f0a0c; }
     .note {
       background: #10131a;
       border-left: 4px solid #e8b945;
-      padding: 14px 16px;
+      padding: 12px 14px;
       border-radius: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.45;
       color: #d6dae3;
     }
-
-    .note-title {
-      font-weight: 700;
-      color: #e8b945;
-      margin-bottom: 4px;
-    }
-
-    .score-big {
-      font-size: 48px;
-      font-weight: 800;
-      color: #e8b945;
-      text-align: center;
-      margin: 12px 0;
-    }
-
-    .rank-title {
-      font-size: 22px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
-    .rank-desc {
-      text-align: center;
-      color: #a0a8b8;
-      margin-bottom: 22px;
-      line-height: 1.5;
-    }
-
+    .note-title { font-weight: 700; color: #e8b945; margin-bottom: 4px; }
+    .score-big { font-size: 44px; font-weight: 800; color: #e8b945; text-align: center; margin: 10px 0; }
+    .rank-title { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 8px; }
+    .rank-desc { text-align: center; color: #a0a8b8; margin-bottom: 20px; font-size: 14px; }
     .summary {
-      max-height: 260px;
+      max-height: 250px;
       overflow-y: auto;
       background: #10131a;
       border: 1px solid #2b3142;
       border-radius: 10px;
-      padding: 12px 16px;
-      margin-bottom: 22px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
     }
-
-    .summary-row {
-      padding: 10px 0;
-      border-bottom: 1px solid #232838;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .summary-row:last-child {
-      border-bottom: none;
-    }
-
-    .ok { color: #2ecc71; font-weight: 700; }
-    .err { color: #ff6b6b; font-weight: 700; }
+    .summary-row { padding: 8px 0; border-bottom: 1px solid #232838; font-size: 13px; }
+    .summary-row:last-child { border-bottom: none; }
+    .hide { display: none; }
   </style>
 </head>
 <body>
-  <div class="app" id="app"></div>
+  <div class="app">
+    <div id="screen-start">
+      <div class="tag">Интерактивный тест · 20 вопросов</div>
+      <h1>Кинематограф России: <span>от немого кино до мирового признания</span></h1>
+      <p class="desc">Проверьте свои знания по истории отечественного кино — от первого сеанса 1896 года и советского авангарда до премий «Оскар», Канн и современных фильмов.</p>
+      <button type="button" class="btn" id="start-btn">Начать квиз</button>
+    </div>
 
-  <script>
-    (function () {
-      var QUESTIONS = [
-        {
-          era: "Зарождение российского кино (1896–1917)",
-          q: "Где и когда состоялся первый публичный киносеанс в России?",
-          a: [
-            "16 мая 1896 года в петербургском саду «Аквариум»",
-            "28 декабря 1895 года в московском театре «Эрмитаж»",
-            "15 октября 1908 года в Зимнем дворце",
-            "1 мая 1900 года на Нижегородской ярмарке"
-          ],
-          c: 0,
-          info: "Первый публичный киносеанс в России прошёл 16 мая 1896 года в петербургском саду «Аквариум»."
-        },
-        {
-          era: "Зарождение российского кино (1896–1917)",
-          q: "Какой фильм Александра Дранкова стал первой российской игровой лентой в 1908 году?",
-          a: [
-            "«Оборона Севастополя»",
-            "«Понизовая вольница» («Стенька Разин»)",
-            "«Пиковая дама»",
-            "«Отец Сергий»"
-          ],
-          c: 1,
-          info: "«Понизовая вольница» («Стенька Разин») Александра Дранкова вышла в 1908 году и стала первой российской игровой лентой."
-        },
-        {
-          era: "Советский авангард",
-          q: "В ведение какого органа в 1919 году перешли киноторговля и кинопромышленность в РСФСР?",
-          a: [
-            "Народного комиссариата по просвещению",
-            "Высшего совета народного хозяйства",
-            "Народного комиссариата иностранных дел",
-            "Комитета по делам искусств при СНК"
-          ],
-          c: 0,
-          info: "В 1919 году кинематографическая торговля и промышленность перешли в ведение Народного комиссариата по просвещению."
-        },
-        {
-          era: "Советский авангард",
-          q: "Кто из перечисленных режиссёров НЕ входил в тройку новаторов советского монтажного кино, указанную в презентации?",
-          a: [
-            "Сергей Эйзенштейн",
-            "Дзига Вертов",
-            "Лев Кулешов",
-            "Григорий Александров"
-          ],
-          c: 3,
-          info: "Монтаж как самостоятельный способ мышления развивали Сергей Эйзенштейн, Дзига Вертов и Лев Кулешов."
-        },
-        {
-          era: "1930–1940-е: звуковое кино",
-          q: "Какой исторический фильм 1930-х годов соединил масштабную постановку и музыку Сергея Прокофьева?",
-          a: [
-            "«Чапаев»",
-            "«Александр Невский»",
-            "«Иван Грозный»",
-            "«Суворов»"
-          ],
-          c: 1,
-          info: "«Александр Невский» соединил исторический сюжет, масштаб постановки и музыку Сергея Прокофьева."
-        },
-        {
-          era: "1930–1940-е: звуковое кино",
-          q: "Какая актриса стала главной звездой музыкальных комедий Григория Александрова («Весёлые ребята», «Цирк», «Волга-Волга»)?",
-          a: [
-            "Марина Ладынина",
-            "Любовь Орлова",
-            "Валентина Серова",
-            "Тамара Макарова"
-          ],
-          c: 1,
-          info: "Любовь Орлова превратилась в одну из главных звёзд советского экрана благодаря музыкальным комедиям Григория Александрова."
-        },
-        {
-          era: "Послевоенное кино и оттепель",
-          q: "Какой советский фильм стал единственной картиной СССР, удостоенной «Золотой пальмовой ветви» Каннского кинофестиваля?",
-          a: [
-            "«Баллада о солдате»",
-            "«Иваново детство»",
-            "«Летят журавли»",
-            "«Судьба человека»"
-          ],
-          c: 2,
-          info: "Фильм Михаила Калатозова «Летят журавли» (1957) завоевал «Золотую пальмовую ветвь» в 1958 году."
-        },
-        {
-          era: "Послевоенное кино и оттепель",
-          q: "Кто был оператором фильма «Летят журавли», чья работа с кружащейся камерой вошла в мировые учебники?",
-          a: [
-            "Эдуард Тиссэ",
-            "Сергей Урусевский",
-            "Вадим Юсов",
-            "Георгий Рерберг"
-          ],
-          c: 1,
-          info: "Оператор Сергей Урусевский совершил революцию киноязыка своей подвижной камерой."
-        },
-        {
-          era: "Послевоенное кино и оттепель",
-          q: "Какой фильм 1959 года стал режиссёрским дебютом Сергея Бондарчука?",
-          a: [
-            "«Война и мир»",
-            "«Судьба человека»",
-            "«Они сражались за Родину»",
-            "«Ватерлоо»"
-          ],
-          c: 1,
-          info: "«Судьба человека» (1959) — режиссёрский дебют Сергея Бондарчука."
-        },
-        {
-          era: "Золотой век советского кинематографа",
-          q: "Какое направление в золотом веке советского кино развивал Андрей Тарковский?",
-          a: [
-            "Эксцентрическая буффонада",
-            "Философская притча, память и образное время",
+    <div id="screen-quiz" class="hide">
+      <div class="top-bar">
+        <span id="q-count">Вопрос 1 из 20</span>
+        <span>Счёт: <strong id="q-score">0</strong></span>
+      </div>
+      <div class="progress-track"><div class="progress-bar" id="q-bar"></div></div>
+      <div class="q-era" id="q-era"></div>
+      <div class="q-title" id="q-title"></div>
+      <div class="answers" id="q-answers"></div>
+      <div class="note hide" id="q-note">
+        <div class="note-title" id="q-note-title"></div>
+        <div id="q-note-text"></div>
+      </div>
+      <button type="button" class="btn" id="next-btn" disabled>Следующий вопрос</button>
+    </div>
+
+    <div id="screen-end" class="hide">
+      <div class="tag">Итоги квиза</div>
+      <div class="score-big" id="end-score">0 / 20</div>
+      <div class="rank-title" id="end-rank"></div>
+      <p class="rank-desc" id="end-desc"></p>
+      <div class="summary" id="end-list"></div>
+      <button type="button" class="btn" id="restart-btn">Пройти заново</button>
+    </div>
+  </div>
+
+  <script id="quiz-json" type="application/json">
+  [
+    {"era":"Зарождение российского кино (1896–1917)","q":"Где и когда состоялся первый публичный киносеанс в России?","a":["16 мая 1896 года в петербургском саду «Аквариум»","28 декабря 1895 года в московском театре «Эрмитаж»","15 октября 1908 года в Зимнем дворце","1 мая 1900 года на Нижегородской ярмарке"],"c":0,"info":"Первый публичный киносеанс в России прошёл 16 мая 1896 года в петербургском саду «Аквариум»."},
+    {"era":"Зарождение российского кино (1896–1917)","q":"Какой фильм Александра Дранкова стал первой российской игровой лентой в 1908 году?","a":["«Оборона Севастополя»","«Понизовая вольница» («Стенька Разин»)","«Пиковая дама»","«Отец Сергий»"],"c":1,"info":"«Понизовая вольница» («Стенька Разин») Александра Дранкова стала первой российской игровой лентой в 1908 году."},
+    {"era":"Советский авангард","q":"В ведение какого органа в 1919 году перешли киноторговля и кинопромышленность в РСФСР?","a":["Народного комиссариата по просвещению","Высшего совета народного хозяйства","Народного комиссариата иностранных дел","Комитета по делам искусств при СНК"],"c":0,"info":"В 1919 году кинематографическая торговля и промышленность в РСФСР перешли в ведение Наркомпроса."},
+    {"era":"Советский авангард","q":"Кто из перечисленных режиссёров НЕ относится к тройке новаторов советского монтажного кино из презентации?","a":["Сергей Эйзенштейн","Дзига Вертов","Лев Кулешов","Григорий Александров"],"c":3,"info":"Монтаж как самостоятельный способ мышления развивали Сергей Эйзенштейн, Дзига Вертов и Лев Кулешов."},
+    {"era":"1930–1940-е: звуковое кино","q":"Какой исторический фильм 1930-х годов соединил масштабную постановку и музыку Сергея Прокофьева?","a":["«Чапаев»","«Александр Невский»","«Иван Грозный»","«Суворов»"],"c":1,"info":"«Александр Невский» соединил исторический сюжет, масштаб постановки и музыку Сергея Прокофьева."},
+    {"era":"1930–1940-е: звуковое кино","q":"Какая актриса стала главной звездой музыкальных комедий Григория Александрова («Весёлые ребята», «Цирк», «Волга-Волга»)?","a":["Марина Ладынина","Любовь Орлова","Валентина Серова","Тамара Макарова"],"c":1,"info":"Любовь Орлова превратилась в одну из главных звёзд советского экрана."},
+    {"era":"Послевоенное кино и оттепель","q":"Какой советский фильм стал единственной картиной СССР, удостоенной «Золотой пальмовой ветви» Каннского кинофестиваля?","a":["«Баллада о солдате»","«Иваново детство»","«Летят журавли»","«Судьба человека»"],"c":2,"info":"Фильм Михаила Калатозова «Летят журавли» (1957) завоевал главный приз Каннского кинофестиваля в 1958 году."},
+    {"era":"Послевоенное кино и оттепель","q":"Кто выступил оператором фильма «Летят журавли», чья работа с кружащейся камерой вошла в мировые учебники?","a":["Эдуард Тиссэ","Сергей Урусевский","Вадим Юсов","Георгий Рерберг"],"c":1,"info":"Операторская работа Сергея Урусевского с кружащейся камерой навсегда вошла в учебники режиссуры."},
+    {"era":"Послевоенное кино и оттепель","q":"Какой фильм 1959 года стал режиссёрским дебютом Сергея Бондарчука?","a":["«Война и мир»","«Судьба человека»","«Они сражались за Родину»","«Ватерлоо»"],"c":1,"info":"«Судьба человека» (1959) — режиссёрский дебют Сергея Бондарчука."},
+    {"era":"Золотой век советского кинематографа","q":"Какое направление в золотом веке советского кино развивал Андрей Тарковский?","a":["Эксцентрическая буффонада","Философская притча, память и образное время","Масштабная батальная реконструкция","Музыкальный водевиль"],"c":1,"info":"Авторское кино Андрея Тарковского соединяет философскую притчу, память и образное время."},
+    {"era":"Международное признание","q":"Какие три фильма СССР получили премию «Оскар» за лучший фильм на иностранном языке?","a":["«Летят журавли», «Солярис», «Ирония судьбы»","«Война и мир», «Дерсу Узала», «Москва слезам не верит»","«Броненосец Потёмкин», «Баллада о солдате», «Калина красная»","«Андрей Рублёв», «Белое солнце пустыни», «Служебный роман»"],"c":1,"info":"Три победы фильмов СССР: «Война и мир» (1969), «Дерсу Узала» (1976) и «Москва слезам не верит» (1981)."},
