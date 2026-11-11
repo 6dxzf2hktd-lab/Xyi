@@ -1,26 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Квиз: Кинематограф России</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Киноквиз: Кинематограф России</title>
   <style>
-    :root {
-      --bg-dark: #0e1015;
-      --bg-card: #181c26;
-      --bg-card-hover: #212634;
-      --gold: #e5b84b;
-      --gold-light: #f6d57e;
-      --crimson: #b8293d;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --correct: #1f7a4c;
-      --correct-border: #34d399;
-      --wrong: #882230;
-      --wrong-border: #f87171;
-      --border: #2c3344;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -28,407 +12,374 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
-      background-color: var(--bg-dark);
-      background-image: radial-gradient(circle at top, #1d2230 0%, #0e1015 70%);
-      color: var(--text-main);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #0d0f14;
+      color: #f4f4f6;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 20px;
-      line-height: 1.5;
+      justify-content: center;
+      padding: 16px;
     }
 
-    .container {
+    .app {
       width: 100%;
-      max-width: 780px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      max-width: 740px;
+      background: #171a23;
+      border: 1px solid #2b3142;
       border-radius: 16px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
-      overflow: hidden;
-      position: relative;
+      padding: 32px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     }
 
-    /* Декоративная киноплёнка сверху */
-    .film-strip {
-      height: 14px;
-      background: repeating-linear-gradient(
-        90deg,
-        #090a0d 0px,
-        #090a0d 14px,
-        var(--gold) 14px,
-        var(--gold) 24px
-      );
-      opacity: 0.85;
-    }
-
-    .content {
-      padding: 36px 40px;
-    }
-
-    @media (max-width: 600px) {
-      .content {
-        padding: 24px 20px;
+    @media (max-width: 560px) {
+      .app {
+        padding: 20px;
       }
     }
 
-    .badge {
+    .tag {
       display: inline-block;
-      background: rgba(229, 184, 75, 0.14);
-      color: var(--gold);
-      border: 1px solid rgba(229, 184, 75, 0.35);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 999px;
-      margin-bottom: 16px;
+      background: rgba(232, 185, 69, 0.15);
+      color: #e8b945;
+      border: 1px solid rgba(232, 185, 69, 0.4);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
     }
 
     h1 {
-      font-size: 2rem;
-      font-weight: 800;
+      font-size: 28px;
+      line-height: 1.25;
       margin-bottom: 12px;
-      color: #ffffff;
     }
 
     h1 span {
-      color: var(--gold);
+      color: #e8b945;
     }
 
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      margin-bottom: 28px;
+    .desc {
+      color: #a0a8b8;
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 24px;
     }
 
-    .stats-preview {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-
-    .stat-box {
-      background: #12151d;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .stat-box strong {
-      display: block;
-      font-size: 1.35rem;
-      color: var(--gold);
-    }
-
-    .stat-box span {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--gold) 0%, #c9972c 100%);
-      color: #111318;
+    .btn-primary {
+      width: 100%;
+      padding: 15px 24px;
+      font-size: 16px;
       font-weight: 700;
-      font-size: 1rem;
+      color: #111318;
+      background: #e8b945;
       border: none;
       border-radius: 10px;
-      padding: 14px 28px;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      width: 100%;
+      transition: background 0.2s;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(229, 184, 75, 0.3);
+    .btn-primary:hover:not(:disabled) {
+      background: #f5ca5c;
     }
 
-    .btn:disabled {
-      opacity: 0.45;
+    .btn-primary:disabled {
+      opacity: 0.4;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
     }
 
-    .btn-secondary {
-      background: transparent;
-      color: var(--gold);
-      border: 1px solid var(--gold);
-      margin-top: 12px;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(229, 184, 75, 0.1);
-      box-shadow: none;
-    }
-
-    /* Экран вопроса */
-    .quiz-header {
+    .top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
-      font-size: 0.92rem;
-      color: var(--text-muted);
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #a0a8b8;
     }
 
-    .score-pill {
-      color: var(--gold);
-      font-weight: 700;
+    .top-bar strong {
+      color: #e8b945;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #0d0f14;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 22px;
     }
 
     .progress-bar {
-      width: 100%;
-      height: 8px;
-      background: #10131a;
-      border-radius: 999px;
-      overflow: hidden;
-      margin-bottom: 26px;
-    }
-
-    .progress-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--crimson), var(--gold));
-      transition: width 0.35s ease;
+      background: #e8b945;
+      transition: width 0.3s ease;
     }
 
-    .era-tag {
-      font-size: 0.8rem;
-      color: var(--gold);
+    .q-era {
+      font-size: 13px;
+      color: #e8b945;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
       font-weight: 600;
-      margin-bottom: 8px;
     }
 
-    .question-text {
-      font-size: 1.35rem;
+    .q-title {
+      font-size: 21px;
       font-weight: 700;
-      margin-bottom: 24px;
-      color: #ffffff;
+      line-height: 1.35;
+      margin-bottom: 20px;
     }
 
-    .options-list {
+    .answers {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 22px;
+      gap: 10px;
+      margin-bottom: 20px;
     }
 
-    .option-btn {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+    .answer-btn {
       width: 100%;
       text-align: left;
-      background: #12151e;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 15px 18px;
-      color: var(--text-main);
-      font-size: 1rem;
+      padding: 14px 16px;
+      background: #10131a;
+      border: 1px solid #2b3142;
+      border-radius: 10px;
+      color: #f4f4f6;
+      font-size: 15px;
       cursor: pointer;
-      transition: all 0.18s ease;
-    }
-
-    .option-btn:hover:not(:disabled) {
-      background: var(--bg-card-hover);
-      border-color: var(--gold);
-    }
-
-    .option-letter {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      background: #1e2330;
-      color: var(--gold);
-      font-weight: 700;
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      gap: 12px;
+      transition: border-color 0.15s, background 0.15s;
     }
 
-    .option-btn.correct {
-      background: rgba(31, 122, 76, 0.28);
-      border-color: var(--correct-border);
+    .answer-btn:hover:not(:disabled) {
+      border-color: #e8b945;
+      background: #1c212e;
     }
 
-    .option-btn.correct .option-letter {
-      background: var(--correct-border);
-      color: #0b1811;
+    .answer-btn:disabled {
+      cursor: default;
     }
 
-    .option-btn.wrong {
-      background: rgba(136, 34, 48, 0.3);
-      border-color: var(--wrong-border);
-    }
-
-    .option-btn.wrong .option-letter {
-      background: var(--wrong-border);
-      color: #1f090c;
-    }
-
-    .explanation-box {
-      display: none;
-      background: #11151f;
-      border-left: 4px solid var(--gold);
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin-bottom: 22px;
-      font-size: 0.95rem;
-      color: #e5e7eb;
-    }
-
-    .explanation-box.visible {
-      display: block;
-      animation: fadeIn 0.25s ease;
-    }
-
-    .explanation-title {
+    .letter {
+      min-width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #232838;
+      color: #e8b945;
       font-weight: 700;
-      color: var(--gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .answer-btn.is-correct {
+      background: rgba(25, 135, 84, 0.25);
+      border-color: #2ecc71;
+    }
+
+    .answer-btn.is-correct .letter {
+      background: #2ecc71;
+      color: #0b1911;
+    }
+
+    .answer-btn.is-wrong {
+      background: rgba(220, 53, 69, 0.25);
+      border-color: #ff6b6b;
+    }
+
+    .answer-btn.is-wrong .letter {
+      background: #ff6b6b;
+      color: #1f0a0c;
+    }
+
+    .note {
+      background: #10131a;
+      border-left: 4px solid #e8b945;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #d6dae3;
+    }
+
+    .note-title {
+      font-weight: 700;
+      color: #e8b945;
       margin-bottom: 4px;
     }
 
-    /* Экран результатов */
-    .result-score {
-      font-size: 3.4rem;
+    .score-big {
+      font-size: 48px;
       font-weight: 800;
-      color: var(--gold);
+      color: #e8b945;
       text-align: center;
-      margin: 10px 0;
+      margin: 12px 0;
     }
 
-    .result-rank {
-      text-align: center;
-      font-size: 1.35rem;
+    .rank-title {
+      font-size: 22px;
       font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .result-desc {
       text-align: center;
-      color: var(--text-muted);
-      margin-bottom: 28px;
+      margin-bottom: 8px;
     }
 
-    .review-list {
-      max-height: 290px;
+    .rank-desc {
+      text-align: center;
+      color: #a0a8b8;
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    .summary {
+      max-height: 260px;
       overflow-y: auto;
-      border: 1px solid var(--border);
+      background: #10131a;
+      border: 1px solid #2b3142;
       border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 24px;
-      background: #12151e;
+      padding: 12px 16px;
+      margin-bottom: 22px;
     }
 
-    .review-item {
+    .summary-row {
       padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
+      border-bottom: 1px solid #232838;
+      font-size: 14px;
+      line-height: 1.4;
     }
 
-    .review-item:last-child {
+    .summary-row:last-child {
       border-bottom: none;
     }
 
-    .review-status {
-      font-weight: 700;
-      margin-right: 6px;
-    }
-
-    .status-ok {
-      color: var(--correct-border);
-    }
-
-    .status-err {
-      color: var(--wrong-border);
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .ok { color: #2ecc71; font-weight: 700; }
+    .err { color: #ff6b6b; font-weight: 700; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="film-strip"></div>
+  <div class="app" id="app"></div>
 
-    <!-- Стартовый экран -->
-    <div id="start-screen" class="content">
-      <div class="badge">Интерактивный киноквиз</div>
-      <h1>Кинематограф России: <span>от немого кино до мирового признания</span></h1>
-      <p class="subtitle">
-        Проверьте свои знания об истории отечественного кино — от первого публичного сеанса 1896 года и эпохи монтажного авангарда до наград «Оскар», Канн и современных блокбастеров.
-      </p>
-
-      <div class="stats-preview">
-        <div class="stat-box">
-          <strong>20</strong>
-          <span>вопросов</span>
-        </div>
-        <div class="stat-box">
-          <strong>Средний</strong>
-          <span>уровень сложности</span>
-        </div>
-        <div class="stat-box">
-          <strong>~7 мин</strong>
-          <span>время прохождения</span>
-        </div>
-      </div>
-
-      <button id="start-btn" class="btn">Начать квиз</button>
-    </div>
-
-    <!-- Экран викторины -->
-    <div id="quiz-screen" class="content hidden">
-      <div class="quiz-header">
-        <span id="question-counter">Вопрос 1 из 20</span>
-        <span id="score-counter" class="score-pill">Счёт: 0</span>
-      </div>
-
-      <div class="progress-bar">
-        <div id="progress-fill" class="progress-fill"></div>
-      </div>
-
-      <div id="era-tag" class="era-tag">Эпоха</div>
-      <div id="question-text" class="question-text">Текст вопроса</div>
-
-      <div id="options-list" class="options-list"></div>
-
-      <div id="explanation-box" class="explanation-box">
-        <div id="explanation-title" class="explanation-title">Пояснение</div>
-        <div id="explanation-text"></div>
-      </div>
-
-      <button id="next-btn" class="btn" disabled>Следующий вопрос</button>
-    </div>
-
-    <!-- Экран результатов -->
-    <div id="result-screen" class="content hidden">
-      <div class="badge">Финальные титры</div>
-      <div id="result-score" class="result-score">0 / 20</div>
-      <div id="result-rank" class="result-rank">Звание</div>
-      <p id="result-desc" class="result-desc">Описание результата</p>
-
-      <div id="review-list" class="review-list"></div>
-
-      <button id="restart-btn" class="btn">Пройти квиз заново</button>
-    </div>
-
+  <script>
+    (function () {
+      var QUESTIONS = [
+        {
+          era: "Зарождение российского кино (1896–1917)",
+          q: "Где и когда состоялся первый публичный киносеанс в России?",
+          a: [
+            "16 мая 1896 года в петербургском саду «Аквариум»",
+            "28 декабря 1895 года в московском театре «Эрмитаж»",
+            "15 октября 1908 года в Зимнем дворце",
+            "1 мая 1900 года на Нижегородской ярмарке"
+          ],
+          c: 0,
+          info: "Первый публичный киносеанс в России прошёл 16 мая 1896 года в петербургском саду «Аквариум»."
+        },
+        {
+          era: "Зарождение российского кино (1896–1917)",
+          q: "Какой фильм Александра Дранкова стал первой российской игровой лентой в 1908 году?",
+          a: [
+            "«Оборона Севастополя»",
+            "«Понизовая вольница» («Стенька Разин»)",
+            "«Пиковая дама»",
+            "«Отец Сергий»"
+          ],
+          c: 1,
+          info: "«Понизовая вольница» («Стенька Разин») Александра Дранкова вышла в 1908 году и стала первой российской игровой лентой."
+        },
+        {
+          era: "Советский авангард",
+          q: "В ведение какого органа в 1919 году перешли киноторговля и кинопромышленность в РСФСР?",
+          a: [
+            "Народного комиссариата по просвещению",
+            "Высшего совета народного хозяйства",
+            "Народного комиссариата иностранных дел",
+            "Комитета по делам искусств при СНК"
+          ],
+          c: 0,
+          info: "В 1919 году кинематографическая торговля и промышленность перешли в ведение Народного комиссариата по просвещению."
+        },
+        {
+          era: "Советский авангард",
+          q: "Кто из перечисленных режиссёров НЕ входил в тройку новаторов советского монтажного кино, указанную в презентации?",
+          a: [
+            "Сергей Эйзенштейн",
+            "Дзига Вертов",
+            "Лев Кулешов",
+            "Григорий Александров"
+          ],
+          c: 3,
+          info: "Монтаж как самостоятельный способ мышления развивали Сергей Эйзенштейн, Дзига Вертов и Лев Кулешов."
+        },
+        {
+          era: "1930–1940-е: звуковое кино",
+          q: "Какой исторический фильм 1930-х годов соединил масштабную постановку и музыку Сергея Прокофьева?",
+          a: [
+            "«Чапаев»",
+            "«Александр Невский»",
+            "«Иван Грозный»",
+            "«Суворов»"
+          ],
+          c: 1,
+          info: "«Александр Невский» соединил исторический сюжет, масштаб постановки и музыку Сергея Прокофьева."
+        },
+        {
+          era: "1930–1940-е: звуковое кино",
+          q: "Какая актриса стала главной звездой музыкальных комедий Григория Александрова («Весёлые ребята», «Цирк», «Волга-Волга»)?",
+          a: [
+            "Марина Ладынина",
+            "Любовь Орлова",
+            "Валентина Серова",
+            "Тамара Макарова"
+          ],
+          c: 1,
+          info: "Любовь Орлова превратилась в одну из главных звёзд советского экрана благодаря музыкальным комедиям Григория Александрова."
+        },
+        {
+          era: "Послевоенное кино и оттепель",
+          q: "Какой советский фильм стал единственной картиной СССР, удостоенной «Золотой пальмовой ветви» Каннского кинофестиваля?",
+          a: [
+            "«Баллада о солдате»",
+            "«Иваново детство»",
+            "«Летят журавли»",
+            "«Судьба человека»"
+          ],
+          c: 2,
+          info: "Фильм Михаила Калатозова «Летят журавли» (1957) завоевал «Золотую пальмовую ветвь» в 1958 году."
+        },
+        {
+          era: "Послевоенное кино и оттепель",
+          q: "Кто был оператором фильма «Летят журавли», чья работа с кружащейся камерой вошла в мировые учебники?",
+          a: [
+            "Эдуард Тиссэ",
+            "Сергей Урусевский",
+            "Вадим Юсов",
+            "Георгий Рерберг"
+          ],
+          c: 1,
+          info: "Оператор Сергей Урусевский совершил революцию киноязыка своей подвижной камерой."
+        },
+        {
+          era: "Послевоенное кино и оттепель",
+          q: "Какой фильм 1959 года стал режиссёрским дебютом Сергея Бондарчука?",
+          a: [
+            "«Война и мир»",
+            "«Судьба человека»",
+            "«Они сражались за Родину»",
+            "«Ватерлоо»"
+          ],
+          c: 1,
+          info: "«Судьба человека» (1959) — режиссёрский дебют Сергея Бондарчука."
+        },
+        {
+          era: "Золотой век советского кинематографа",
+          q: "Какое направление в золотом веке советского кино развивал Андрей Тарковский?",
+          a: [
+            "Эксцентрическая буффонада",
+            "Философская притча, память и образное время",
